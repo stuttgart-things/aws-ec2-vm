@@ -1,9 +1,0 @@
-region = "eu-central-1"
-vpc = "vpc-ec6e8e86"
-ami = "ami-09042b2f6d07d164a"
-itype = "m4.large"
-subnet = "subnet-19213454"
-publicip = true
-key_name = "key"
-secgroupname = "IAC-Sec-Group"
-ssh_path="~/.ssh/id_rsa.pub"
