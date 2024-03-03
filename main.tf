@@ -1,8 +1,6 @@
 provider "aws" {
   profile    = "default"
   region     = var.region
-  # export AWS_ACCESS_KEY_ID
-  # export AWS_SECRET_ACCESS_KEY
 }
 
 resource "aws_security_group" "project-iac-sg" {
@@ -69,7 +67,6 @@ resource "aws_instance" "project-iac" {
 
   depends_on = [ aws_security_group.project-iac-sg ]
 }
-
 
 output "ec2instance" {
   value = aws_instance.project-iac.public_ip
