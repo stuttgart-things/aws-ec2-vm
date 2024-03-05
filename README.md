@@ -13,9 +13,9 @@ module "ec2-vm" {
   itype         = "t2.micro"
   subnet        = "subnet-19213454"
   publicip      = true
-  key_name      = "~/.ssh/id_rsa.pub"
+  key_name      = "~/.ssh/id_rsa.pub"                 ### path of public key ###
   secgroupname  = "IAC-Sec-Group"
-  ssh_path      = "pub.key"
+  ssh_path      = "pub.key"                           ### the public key ###
 }
 ```
 
