@@ -3,6 +3,11 @@ import yaml
 import random
 from jinja2 import Template
 
+# TEMPLATE
+moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
+  {{ key }}="{{ values[key] }}"{% endfor %}
+}"""
+
 # GET RANDOM ITEM FROM LIST
 def get_random_fromlist(list):
   random_num = random.choice(list)
@@ -10,25 +15,30 @@ def get_random_fromlist(list):
 
   return str(random_num)
 
-# LOAD YAML FILE
-with open('values.yaml', 'r') as f:
-    values = yaml.load(f, Loader=yaml.SafeLoader)
+# RENDER TEMPLATE
+def render_template(values):
+  template = Template(moduleCallTemplate)
+  renderedTemplate = template.render(values=values)
 
-# ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
-for key in values:
-  print(key)
+  return str(renderedTemplate)
 
-  if isinstance(values[key], list):
-    values[key] = get_random_fromlist(values[key])
+def main():
 
-  print(values[key])
+  # LOAD YAML FILE
+  with open('values.yaml', 'r') as f:
+      values = yaml.load(f, Loader=yaml.SafeLoader)
 
-# name = input("Enter your name: ")
+  # ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
+  for key in values:
+    print(key)
 
-moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
-  {{ key }}="{{ values[key] }}"{% endfor %}
-}"""
+    if isinstance(values[key], list):
+      values[key] = get_random_fromlist(values[key])
 
-tm = Template(moduleCallTemplate)
-msg = tm.render(values=values)
-print(msg)
+    print(values[key])
+
+  renderedTemplate = render_template(values)
+  print(renderedTemplate)
+
+if __name__ == '__main__':
+    main()
