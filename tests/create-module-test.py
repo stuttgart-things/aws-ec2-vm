@@ -30,6 +30,8 @@ def main():
 
   # ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
   for key in values:
+
+    # CHECK FOR LIST
     if isinstance(values[key], list):
       values[key] = get_random_fromlist(values[key])
 
