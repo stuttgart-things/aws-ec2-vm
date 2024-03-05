@@ -17,6 +17,10 @@ module "ec2-vm" {
   secgroupname  = "IAC-Sec-Group"
   ssh_path      = "pub.key"                           ### the public key ###
 }
+
+output "ec2-vm" {
+  value       = [module.ec2-vm.ec2instance]           ### referencing output value from child module ###
+}
 ```
 
 ## PREREQUISITES
