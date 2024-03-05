@@ -11,7 +11,7 @@ moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in valu
 # GET RANDOM ITEM FROM LIST
 def get_random_fromlist(list):
   random_num = random.choice(list)
-  print("Random select is : " + str(random_num))
+  print("RANDOM SELECT IS: " + str(random_num))
 
   return str(random_num)
 
@@ -30,12 +30,8 @@ def main():
 
   # ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
   for key in values:
-    print(key)
-
     if isinstance(values[key], list):
       values[key] = get_random_fromlist(values[key])
-
-    print(values[key])
 
   renderedTemplate = render_template(values)
   print(renderedTemplate)
