@@ -51,3 +51,9 @@ variable "ssh_path" {
   type        = string
   description = "Path for ssh public key"
 }
+
+variable "user_data" {
+  type = string
+  default = false
+  description = "Path for user-data script"
+}
