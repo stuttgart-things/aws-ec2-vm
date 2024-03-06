@@ -4,12 +4,14 @@ import random
 from jinja2 import Template
 import os
 
-# Directory
+# DIRECTORY CREATION & CHECK IF IT EXISTS OR NOT
 path = "/tmp/aws-ec2-vm"
-os.mkdir(path)
-print("folder '% s' created" % path)
 
-
+if not os.path.exists(path):
+  os.mkdir(path)
+  print("Folder %s created!" % path)
+else:
+  print("Folder %s already exists" % path)
 
 # TEMPLATE
 moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
