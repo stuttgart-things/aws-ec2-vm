@@ -5,11 +5,10 @@ from jinja2 import Template
 import os
 
 # Directory
-directory = "aws-ec2-vm"
-parent_dir = "/tmp/"
-path = os.path.join(parent_dir, directory)
-os.mkdir(path) 
-print("Directory '% s' created" % directory) 
+path = "/tmp/aws-ec2-vm"
+os.mkdir(path)
+print("folder '% s' created" % path)
+
 
 
 # TEMPLATE
