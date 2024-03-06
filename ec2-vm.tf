@@ -1,9 +1,10 @@
 resource "aws_instance" "project-iac" {
-  ami = var.ami
-  instance_type = var.itype
-  subnet_id = var.subnet #FFXsubnet2
+  ami                         = var.ami
+  instance_type               = var.itype
+  subnet_id                   = var.subnet #FFXsubnet2
   associate_public_ip_address = var.publicip
-  key_name = var.key_name
+  key_name                    = var.key_name
+  user_data                   = data.template_file.user_data.rendered
 
 
   vpc_security_group_ids = [
@@ -11,16 +12,20 @@ resource "aws_instance" "project-iac" {
   ]
   root_block_device {
     delete_on_termination = true
-    iops = 150
-    volume_size = 50
-    volume_type = "gp3"
+    iops                  = 150
+    volume_size           = 50
+    volume_type           = "gp3"
   }
   tags = {
-    Name ="SERVER01"
+    Name        = "SERVER01"
     Environment = "DEV"
-    OS = "UBUNTU"
-    Managed = "IAC"
+    OS          = "UBUNTU"
+    Managed     = "IAC"
   }
 
-  depends_on = [ aws_security_group.project-iac-sg ]
+  depends_on = [aws_security_group.project-iac-sg]
+}
+
+data "template_file" "user_data" {
+  template = file("/home/shq1kor/learn-terraform-provisioning/scripts")
 }
