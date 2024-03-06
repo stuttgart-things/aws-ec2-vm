@@ -5,8 +5,12 @@ from jinja2 import Template
 import os
 
 # Directory
-folder_name = "/tmp/aws-ec2-vm/"
-os.mkdir(folder_name)
+directory = "aws-ec2-vm"
+parent_dir = "/tmp/"
+path = os.path.join(parent_dir, directory)
+os.mkdir(path) 
+print("Directory '% s' created" % directory) 
+
 
 # TEMPLATE
 moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
