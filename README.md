@@ -16,6 +16,7 @@ module "ec2-vm" {
   key_name      = "~/.ssh/id_rsa.pub"                 ### path of public key ###
   secgroupname  = "IAC-Sec-Group"
   ssh_path      = "pub.key"                           ### the public key ###
+  user_data     = "../scripts/add-ssh-web-app.yaml    ### path of cloud-init script ###
 }
 
 output "ec2-vm" {
