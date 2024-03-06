@@ -27,5 +27,5 @@ resource "aws_instance" "project-iac" {
 }
 
 data "template_file" "user_data" {
-  template = file("/home/shq1kor/learn-terraform-provisioning/scripts/add-ssh-web-app.yaml")
+  template = file(var.user_data)
 }
