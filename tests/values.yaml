@@ -13,3 +13,6 @@ itype:
 publicip:
   - true
   - false
+secgroupname: IAC-Sec-Group
+key_name: "~/.ssh/id_rsa.pub"
+ssh_path: "pub.key"

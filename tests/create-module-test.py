@@ -2,6 +2,11 @@
 import yaml
 import random
 from jinja2 import Template
+import os
+
+# Directory
+folder_name = "/tmp/aws-ec2-vm/"
+os.mkdir(folder_name)
 
 # TEMPLATE
 moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
