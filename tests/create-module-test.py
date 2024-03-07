@@ -4,6 +4,7 @@ import random
 from jinja2 import Template
 import os
 
+
 # DIRECTORY CREATION & CHECK IF IT EXISTS OR NOT
 path = "/tmp/aws-ec2-vm"
 
@@ -47,6 +48,10 @@ def main():
 
   renderedTemplate = render_template(values)
   print(renderedTemplate)
+
+#render output
+  with open('/tmp/aws-ec2-vm/main.tf', 'w') as f:
+    f.write(renderedTemplate)
 
 if __name__ == '__main__':
     main()
