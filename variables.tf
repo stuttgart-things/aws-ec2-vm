@@ -52,8 +52,14 @@ variable "ssh_path" {
   description = "Path for ssh public key"
 }
 
-variable "user_data" {
-  type = string
-  default = false
-  description = "Path for user-data script"
+variable "package_update" {
+  type        = bool
+  default     = false
+  description = "package update during cloud init"
+}
+
+variable "package_upgrade" {
+  type        = bool
+  default     = false
+  description = "package upgrade during cloud init"
 }

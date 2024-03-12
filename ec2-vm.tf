@@ -4,8 +4,13 @@ resource "aws_instance" "project-iac" {
   subnet_id                   = var.subnet #FFXsubnet2
   associate_public_ip_address = var.publicip
   key_name                    = var.key_name
-  user_data                   = data.template_file.user_data.rendered
-
+  user_data = templatefile(
+    "${path.module}/templates/cloud-init.yaml.tpl",
+    {
+      "package_update"  = var.package_update
+      "package_upgrade" = var.package_upgrade
+    }
+  )
 
   vpc_security_group_ids = [
     aws_security_group.project-iac-sg.id
@@ -24,8 +29,4 @@ resource "aws_instance" "project-iac" {
   }
 
   depends_on = [aws_security_group.project-iac-sg]
-}
-
-data "template_file" "user_data" {
-  template = file(var.user_data)
 }

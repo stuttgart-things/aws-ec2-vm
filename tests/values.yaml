@@ -1,4 +1,4 @@
----
+----
 source: github.com/stuttgart-things/aws-ec2-vm
 region:
   - eu-central-1
