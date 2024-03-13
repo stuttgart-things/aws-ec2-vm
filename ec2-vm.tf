@@ -30,3 +30,12 @@ resource "aws_instance" "project-iac" {
 
   depends_on = [aws_security_group.project-iac-sg]
 }
+
+data "template_file" "clout-init.yaml" {
+  template = file("${path.module}/templates/cloud-init.yaml.tpl")
+  vars = {
+    package_update  = var.package_update
+    package_upgrade = var.package_upgrade
+  }
+}
+
