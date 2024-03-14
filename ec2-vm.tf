@@ -9,6 +9,8 @@ resource "aws_instance" "project-iac" {
     {
       "package_update"  = var.package_update
       "package_upgrade" = var.package_upgrade
+      "packages" = var.packages
+      "users" = var.users
     }
   )
 
@@ -30,5 +32,3 @@ resource "aws_instance" "project-iac" {
 
   depends_on = [aws_security_group.project-iac-sg]
 }
-
-

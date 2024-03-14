@@ -63,3 +63,22 @@ variable "package_upgrade" {
   default     = false
   description = "package upgrade during cloud init"
 }
+
+variable "packages" {
+  type        = list(string)
+  default     = ["git", "vim"]
+  description = "packages to be installed during cloud init"
+}
+
+variable "users" {
+  type = list(object({
+    name   = string
+    gecos = string
+    sudo = string
+    groups = string
+    lock_passwd = bool
+    ssh_authorized_key = string
+  }))
+  default     = []
+  description = "A list of users created during cloud-init"
+}
