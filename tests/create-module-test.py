@@ -54,7 +54,7 @@ def main():
   print(renderedTemplate)
 
 #render output
-  with open('/tmp/aws-ec2-vm/main.tf', 'w') as f:
+  with open(path+'/main.tf', 'w') as f:
     f.write(renderedTemplate)
 
 if __name__ == '__main__':
