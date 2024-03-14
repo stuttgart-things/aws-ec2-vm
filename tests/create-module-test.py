@@ -3,6 +3,7 @@ import yaml
 import random
 from jinja2 import Template
 import os
+import sys
 
 
 # DIRECTORY CREATION & CHECK IF IT EXISTS OR NOT
@@ -13,6 +14,7 @@ if not os.path.exists(path):
   print("Folder %s created!" % path)
 else:
   print("Folder %s already exists" % path)
+
 
 # TEMPLATE
 moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
@@ -48,6 +50,19 @@ def main():
 
   renderedTemplate = render_template(values)
   print(renderedTemplate)
+
+# ADDING DIFFERENT PATH TO GET THE RENDERED TEMPLATE
+#  if len(sys.argv) > 1:
+#    new_output_path = sys.argv[1]
+#  else:
+#    print("Please provide the output path as an argument.")
+#    sys.exit(1)
+#  output_path = new_output_path
+#
+#  output_file = open(output_path, "w")
+#  output_file.write(renderedTemplate)
+#  output_file.close()
+
 
 #render output
   with open(path+'/main.tf', 'w') as f:              ### used concatenation here ###
