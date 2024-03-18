@@ -85,7 +85,7 @@ variable "users" {
 
 
 variable "instance_tags" {
-  type = map(object)
+  type = map(string)
   default = {
     Name = "SERVER01"
     Environment = "DEV"
