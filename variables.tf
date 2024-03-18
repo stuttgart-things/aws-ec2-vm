@@ -83,8 +83,9 @@ variable "users" {
   description = "A list of users created during cloud-init"
 }
 
+
 variable "instance_tags" {
-  type = map(string)
+  type = map(object)
   default = {
     Name = "SERVER01"
     Environment = "DEV"
