@@ -8,7 +8,7 @@ ${yamlencode({
       groups = user.groups
       sudo = user.sudo
       lock_passwd = user.lock_passwd
-      ssh_authorized_keys = user.ssh_authorized_keys
+      ssh_authorized_key = user.ssh_authorized_key
     }
   ]
 })}

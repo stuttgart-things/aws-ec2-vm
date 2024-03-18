@@ -72,13 +72,23 @@ variable "packages" {
 
 variable "users" {
   type = list(object({
-    name   = string
-    gecos = string
-    sudo = string
-    groups = string
-    lock_passwd = bool
+    name               = string
+    gecos              = string
+    sudo               = string
+    groups             = string
+    lock_passwd        = bool
     ssh_authorized_key = string
   }))
   default     = []
   description = "A list of users created during cloud-init"
+}
+
+variable "instance_tags" {
+  type = map(string)
+  default = {
+    Name = "SERVER01"
+    Environment = "DEV"
+    OS = "UBUNTU"
+    Managed = "IAC"
+  }
 }

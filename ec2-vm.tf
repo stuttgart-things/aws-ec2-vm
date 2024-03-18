@@ -9,8 +9,8 @@ resource "aws_instance" "project-iac" {
     {
       "package_update"  = var.package_update
       "package_upgrade" = var.package_upgrade
-      "packages" = var.packages
-      "users" = var.users
+      "packages"        = var.packages
+      "users"           = var.users
     }
   )
 
@@ -23,12 +23,9 @@ resource "aws_instance" "project-iac" {
     volume_size           = 50
     volume_type           = "gp3"
   }
-  tags = {
-    Name        = "SERVER01"
-    Environment = "DEV"
-    OS          = "UBUNTU"
-    Managed     = "IAC"
-  }
+
+  tags = var.instance_tags
+
 
   depends_on = [aws_security_group.project-iac-sg]
 }
