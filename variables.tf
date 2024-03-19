@@ -86,10 +86,6 @@ variable "users" {
 
 variable "instance_tags" {
   type = map(string)
-  default = {
-    Name = "SERVER01"
-    Environment = "DEV"
-    OS = "UBUNTU"
-    Managed = "IAC"
-  }
+  default = {}
+  description = "To define the tags for resources"
 }
