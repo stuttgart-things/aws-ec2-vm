@@ -85,7 +85,7 @@ variable "users" {
 
 
 variable "instance_tags" {
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
   description = "To define the tags for resources"
 }
