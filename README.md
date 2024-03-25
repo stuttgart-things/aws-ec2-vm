@@ -43,6 +43,14 @@ export AWS_SECRET_ACCESS_KEY=<insert secret id>
 
 Or install [aws-cli](https://github.com/aws/aws-cli) and run the configure command.
 
+## CONNECT TO MACHINE(S)
+
+```bash
+ssh <${USERNAME}>@${PUBLIC-IP}
+# CHECK CLOUD-INIT LOGS
+cat /var/log/cloud-init-output.log
+```
+
 ## Author Information
 
 ```bash
