@@ -6,7 +6,7 @@ terraform module for creating ec2 vm instances
 
 ```hcl
 module "ec2-vm" {
-  source          = "github.com/stuttgart-things/aws-ec2-vm" # /home/sthings/projects/tf/aws-ec2-vm
+  source          = "github.com/stuttgart-things/aws-ec2-vm" # or local e.g. : /home/sthings/projects/tf/aws-ec2-vm
   region          = "eu-west-1"
   vpc             = "vpc-08520570421e6f9f4"
   ami             = "ami-0cccdaf0d83701c22"
@@ -24,11 +24,11 @@ module "ec2-vm" {
 }
 
 output "ec2-vm" {
-  value = [module.ec2-vm.ec2instance] ### referencing output value from child module ###
+  value = [module.ec2-vm.ec2instance]
 }
 
 output "cloudinit" {
-  value = [module.ec2-vm.cloudinit] ### referencing output value from child module ###
+  value = [module.ec2-vm.cloudinit]
 }
 ```
 
