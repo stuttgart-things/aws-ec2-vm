@@ -1,9 +1,9 @@
-resource "aws_security_group" "project-iac-sg" {
+resource "aws_security_group" "ec2-sg" {
   name        = var.secgroupname
   description = var.secgroupname
   vpc_id      = var.vpc
 
-  // To Allow SSH Transport
+  // TO ALLOW SSH TRANSPORT
   ingress {
     from_port   = 22
     protocol    = "tcp"
@@ -11,7 +11,7 @@ resource "aws_security_group" "project-iac-sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  // To Allow Port 80 Transport
+  // TO ALLOW PORT 80 TRANSPORT
   ingress {
     from_port   = 80
     protocol    = "tcp"

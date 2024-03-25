@@ -1,27 +1,28 @@
 ---
 source: '"github.com/stuttgart-things/aws-ec2-vm"'
 region:
-  - '"eu-central-1"'
-  - '"eu-central-2"'
-  - '"eu-central-3"'
-vpc: '"vpc-ec6e8e86"'
-ami: '"ami-023adaba598e661ac"'
+  - '"eu-west-1"'
+vpc: '"vpc-08520570421e6f9f4"'
+ami: '"ami-0cccdaf0d83701c22"'
 itype:
   - '"t2.micro"'
   - '"t3.micro"'
-  - '"t4.micro"'
+  - '"m4.large"'
 publicip:
   - true
   - false
-secgroupname: '"IAC-Sec-Group"'
-ssh_path: '"~/.ssh/"'
-key_name: '"id_rsa.pub"'
+secgroupname: '"terraform-20240325102244051600000002"'
+subnet: '"subnet-09dd9c1f37ae08fb3"'
 packages:
   - '["wget", "whoami", "chmod", "mv", "update-ca-certificates"]'
+  - '["vim", "git"]'
 package_upgrade:
   - true
   - false
 package_update:
   - true
   - false
-users: '[{ name = "sthings", gecos = "sthings user", groups = "admin, ubuntu", lock_passwd = "true", sudo = "ALL=(ALL) NOPASSWD:ALL", ssh_authorized_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsHiyet7tO+qXYKEy6XBiHNICRfGsBZYIo/JBQ2i16WgkC7rq6bkGwBYtni2j0X2pp0JVtcMO+hthqj37LcGH02hKa24eAoj2UdnFU+bhYxA6Mau1B/5MCkvs8VvBjxtM3FVJE7mY5bZ19YrKJ9ZIosAQaVHiGUu1kk49rzQqMrwT/1PNbUYW19P8J2LsfnaYJIl4Ljbxr0k52MGdbKwgxdph3UKciQz2DhutrmO0gf3Ncn4zpdClldaBtDB0EMMqD3BAtEVsucttzqdeYQwixMTtyuGpAKAJNUqhpleeVhShPZLke0vXxlA6/fyfkSM78gN2FQcRGVPN6hOMkns/b" }]'
+init_username:
+  - '"sthings"'
+init_pubkey:
+  - '"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsHiyet7tO+qXYKEy6XBiHNICRfGsBZYIo/JBQ2i16WgkC7rq6bkGwBYtni2j0X2pp0JVtcMO+hthqj37LcGH02hKa24eAoj2UdnFU+bhYxA6Mau1B/5MCkvs8VvBjxtM3FVJE7mY5bZ19YrKJ9ZIosAQaVHiGUu1kk49rzQqMrwT/1PNbUYW19P8J2LsfnaYJIl4Ljbxr0k52MGdbKwgxdph3UKciQz2DhutrmO0gf3Ncn4zpdClldaBtDB0EMMqD3BAtEVsucttzqdeYQwixMTtyuGpAKAJNUqhpleeVhShPZLke0vXxlA6/fyfkSM78gN2FQcRGVPN6hOMkns/b"'

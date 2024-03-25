@@ -6,21 +6,21 @@ terraform module for creating ec2 vm instances
 
 ```hcl
 module "ec2-vm" {
-  source          = "github.com/stuttgart-things/aws-ec2-vm" # or local e.g. : /home/sthings/projects/tf/aws-ec2-vm
+  source          = "github.com/stuttgart-things/aws-ec2-vm"
+  #source          = "/home/sthings/projects/bosch/pat/aws-ec2-vm"
   region          = "eu-west-1"
   vpc             = "vpc-08520570421e6f9f4"
   ami             = "ami-0cccdaf0d83701c22"
   itype           = "t3.micro"
   publicip        = true
   secgroupname    = "terraform-20240325102244051600000002"
-  ssh_path        = "~/.ssh/id_rsa.pub"
-  key_name        = "id_rsa.pub"
-  packages        = ["wget", "whoami", "chmod", "mv", "update-ca-certificates"]
-  package_upgrade = true
   subnet          = "subnet-09dd9c1f37ae08fb3"
+  packages        = ["vim", "git"]
+  package_upgrade = false
   package_update  = true
   init_username   = "sthings"
-  init_pubkey     = "ssh-rsa AAAAB3Nz #..."
+  instance_tags   = { Name = "test", Environment = "dev" }
+  init_pubkey     = "ssh-rsa AAAAB3Nz.."
 }
 
 output "ec2-vm" {
@@ -29,6 +29,14 @@ output "ec2-vm" {
 
 output "cloudinit" {
   value = [module.ec2-vm.cloudinit]
+}
+
+terraform {
+  backend "s3" {
+    bucket = "pat-tf1"
+    key    = "terraform.tfstate"
+    region = "eu-west-1"
+  }
 }
 ```
 
@@ -42,6 +50,13 @@ export AWS_SECRET_ACCESS_KEY=<insert secret id>
 ```
 
 Or install [aws-cli](https://github.com/aws/aws-cli) and run the configure command.
+
+## CREATE (LOCAL) TEST CONFIGURATION
+
+```bash
+# EXAMPLE CALL
+python3 tests/create-module-test.py --values tests/values.yaml
+```
 
 ## CONNECT TO MACHINE(S)
 

@@ -1,5 +1,5 @@
 output "ec2instance" {
-  value = aws_instance.project-iac.public_ip
+  value = aws_instance.ec2.public_ip
 }
 
 data "template_file" "cloudinit" {
