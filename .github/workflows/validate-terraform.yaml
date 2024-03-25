@@ -7,10 +7,7 @@ on:
     - feature/*
     - fix/*
   pull_request:
-    branches:
-    - main
-    - feature/*
-    - fix/*
+    types: [opened, reopened]
   workflow_dispatch:
 
 jobs:
