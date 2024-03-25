@@ -4,24 +4,38 @@ import random
 from jinja2 import Template
 import os
 import argparse
+import sys
+import shutil
 
-# DIRECTORY CREATION & CHECK IF IT EXISTS OR NOT
-path = "/tmp/aws-ec2-vm"
+# WORKSPACE MODULE CALL TEMPLATE
+moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
+  {{ key }} = {{ values[key] }}{% endfor %}
+}"""
 
+# PARSE ARGS
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--values', default='values.yaml')
+parser.add_argument('-v', '--values', default='values.yaml')
+parser.add_argument('-s', '--source', default='local')
+parser.add_argument('-p', '--path', default='/tmp/tf/')
 args = parser.parse_args()
 
-if not os.path.exists(path):
-  os.mkdir(path)
-  print("Folder %s created!" % path)
-else:
-  print("Folder %s already exists" % path)
+local_module_path = os.path.dirname(sys.path[0])
+module_name = local_module_path.split('/').pop()
+local_workspace_path = args.path + module_name
 
-# TEMPLATE
-moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
-  {{ key }}="{{ values[key] }}"{% endfor %}
-}"""
+# DIRECTORY CREATION & CHECK IF IT EXISTS OR NOT
+
+# DELETE LOCAL WORKSPACE FOLDER IF EXISTS
+if os.path.exists(local_workspace_path):
+    shutil.rmtree(local_workspace_path)
+    print("EXISTING FOLDER %s DELETED!" % local_workspace_path)
+
+# CREATE WORKSPACE FOLDER
+if not os.path.exists(local_workspace_path):
+  os.makedirs(local_workspace_path)
+  print("FOLDER %s CREATED!" % local_workspace_path)
+else:
+  print("FOLDER %s ALREADY EXISTS" % local_workspace_path)
 
 # GET RANDOM ITEM FROM LIST
 def get_random_fromlist(list):
@@ -44,6 +58,9 @@ def main():
       values = yaml.load(f, Loader=yaml.SafeLoader)
 
   # ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
+  if args.source == "local":
+    values["source"] = '"'+local_module_path+'"'
+
   for key in values:
 
     # CHECK FOR LIST
@@ -51,10 +68,13 @@ def main():
       values[key] = get_random_fromlist(values[key])
 
   renderedTemplate = render_template(values)
+  renderedTemplate = renderedTemplate.replace("True", "true")
+  renderedTemplate = renderedTemplate.replace("False", "false")
+
   print(renderedTemplate)
 
-#render output
-  with open(path+'/main.tf', 'w') as f:
+# RENDER OUTPUT
+  with open(local_workspace_path+'/main.tf', 'w') as f:
     f.write(renderedTemplate)
 
 if __name__ == '__main__':
