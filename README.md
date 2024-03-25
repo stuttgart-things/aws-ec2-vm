@@ -6,26 +6,29 @@ terraform module for creating ec2 vm instances
 
 ```hcl
 module "ec2-vm" {
-  source        = "github.com/stuttgart-things/aws-ec2-vm"
-  region        = "eu-central-1"
-  vpc           = "vpc-ec6e8e86"
-  ami           = "ami-023adaba598e661ac"
-  itype         = "t2.micro"
-  subnet        = "subnet-19213454"
-  publicip      = true
-  key_name      = "~/.ssh/id_rsa.pub"
-  secgroupname  = "IAC-Sec-Group"
-  ssh_path      = "pub.key"
-ssh_path        = "/home/shq1kor/.ssh/id_rsa.pub"
-  package_upgrade = "true"
-  package_update  = "true"
+  source          = "github.com/stuttgart-things/aws-ec2-vm" # /home/sthings/projects/tf/aws-ec2-vm
+  region          = "eu-west-1"
+  vpc             = "vpc-08520570421e6f9f4"
+  ami             = "ami-0cccdaf0d83701c22"
+  itype           = "t3.micro"
+  publicip        = true
+  secgroupname    = "terraform-20240325102244051600000002"
+  ssh_path        = "~/.ssh/id_rsa.pub"
+  key_name        = "id_rsa.pub"
   packages        = ["wget", "whoami", "chmod", "mv", "update-ca-certificates"]
-  users           = [{ name = "patrick", gecos = "patrick user", groups = "admin, ubuntu", lock_passwd = "true", sudo = "ALL=(ALL) NOPASSWD:ALL", ssh_authorized_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfYG248QubjU8EQN0tjIwq5CSJn2kMvGa/2IbPtXqR3UeDNdZ6QDaaXk7IyGeTAcNH5JnAO7gVBIrH5UEFBUWGQ84JbiDoDfLNNV9IXDagXHfv41wFP8Bhd026LoQqUEBU5/Uc+N+myq29pRpH0v+ko55cmxAq3JEvIJ6FqCIi4NQNT4zi2V0CAbWsHMbx9+bLAqQhyHtx+vBxncEtfuS7H6qjipDmXsnCJPVlnh2RjhPKCivQTBLozQm8xT0isFiSuRXsKg3fPz6s14YrAR7pA3oeRmHF4o0OVHN2XCY+zp8+E+nPeZ7j8eoL+iZuQgVxk5ISVpT1iMpDBLRyGdqHD02BlkqAKVhLHUoeWFbjLw1ge7QYz63BwYOxEme+9VHImT3f+nRzCUUiiwgzyCURcUKraD3CTSJXmy3rA2ADrUuswIsoNm0E3JnDqsRP8NMcZR22R1NkEXuMhiPGeY6FbqSAPOoOir9KZBS3ZUFq37pyHq0Fqbp/PAQq1BONBr0= shq1kor@BMH2-C-00134" }]
-
+  package_upgrade = true
+  subnet          = "subnet-09dd9c1f37ae08fb3"
+  package_update  = true
+  init_username   = "sthings"
+  init_pubkey     = "ssh-rsa AAAAB3Nz #..."
 }
 
 output "ec2-vm" {
-  value       = [module.ec2-vm.ec2instance]           ### referencing output value from child module ###
+  value = [module.ec2-vm.ec2instance] ### referencing output value from child module ###
+}
+
+output "cloudinit" {
+  value = [module.ec2-vm.cloudinit] ### referencing output value from child module ###
 }
 ```
 

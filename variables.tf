@@ -70,22 +70,32 @@ variable "packages" {
   description = "packages to be installed during cloud init"
 }
 
-variable "users" {
-  type = list(object({
-    name               = string
-    gecos              = string
-    sudo               = string
-    groups             = string
-    lock_passwd        = bool
-    ssh_authorized_key = string
-  }))
-  default     = []
-  description = "A list of users created during cloud-init"
-}
-
-
 variable "instance_tags" {
   type        = map(string)
   default     = {}
   description = "To define the tags for resources"
+}
+
+variable "init_username" {
+  default     = false
+  type        = string
+  description = "init ssh user (cloud-init)"
+}
+
+variable "init_sudo" {
+  default     = "ALL=(ALL) NOPASSWD:ALL"
+  type        = string
+  description = "init ssh user (cloud-init) sudo command"
+}
+
+variable "init_groups" {
+  default     = "ubuntu, admin"
+  type        = string
+  description = "init ssh user (cloud-init) init group"
+}
+
+variable "init_pubkey" {
+  default     = false
+  type        = string
+  description = "init ssh user (cloud-init) pub key"
 }
