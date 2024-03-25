@@ -32,7 +32,3 @@ resource "aws_instance" "project-iac" {
 
   depends_on = [aws_security_group.project-iac-sg]
 }
-
-data "template_file" "user_data" {
-  template = file(var.user_data)
-}
