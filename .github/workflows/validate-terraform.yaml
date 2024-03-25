@@ -17,6 +17,6 @@ jobs:
     with:
       environment-name: k8s
       runs-on: ghr-aws-ec2-vm-sthings-cicd
-      terraform-version: 1.6
-      tflint-version: "v0.50.0"
+      terraform-version: 1.7
+      tflint-version: v0.50.3
       continue-error: false
