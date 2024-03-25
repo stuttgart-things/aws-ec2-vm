@@ -1,9 +1,8 @@
-resource "aws_instance" "project-iac" {
+resource "aws_instance" "ec2" {
   ami                         = var.ami
   instance_type               = var.itype
   subnet_id                   = var.subnet #FFXsubnet2
   associate_public_ip_address = var.publicip
-  key_name                    = var.key_name
   user_data = templatefile(
     "${path.module}/templates/cloud-init.yaml.tpl",
     {
@@ -18,7 +17,7 @@ resource "aws_instance" "project-iac" {
   )
 
   vpc_security_group_ids = [
-    aws_security_group.project-iac-sg.id
+    aws_security_group.ec2-sg.id
   ]
 
   root_block_device {
@@ -30,5 +29,5 @@ resource "aws_instance" "project-iac" {
 
   tags = var.instance_tags
 
-  depends_on = [aws_security_group.project-iac-sg]
+  depends_on = [aws_security_group.ec2-sg]
 }

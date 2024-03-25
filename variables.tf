@@ -34,22 +34,10 @@ variable "publicip" {
   description = "Use of public ip True/false"
 }
 
-variable "key_name" {
-  default     = false
-  type        = string
-  description = "Key name for ssh key"
-}
-
 variable "secgroupname" {
   default     = false
   type        = string
   description = "Name of Security Group"
-}
-
-variable "ssh_path" {
-  default     = false
-  type        = string
-  description = "Path for ssh public key"
 }
 
 variable "package_update" {
