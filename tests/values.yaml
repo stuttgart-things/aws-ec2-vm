@@ -1,18 +1,27 @@
 ---
-source: github.com/stuttgart-things/aws-ec2-vm
+source: '"github.com/stuttgart-things/aws-ec2-vm"'
 region:
-  - eu-central-1
-  - eu-central-2
-  - eu-central-3
-vpc: vpc-ec6e8e86
-ami: ami-023adaba598e661ac
+  - '"eu-central-1"'
+  - '"eu-central-2"'
+  - '"eu-central-3"'
+vpc: '"vpc-ec6e8e86"'
+ami: '"ami-023adaba598e661ac"'
 itype:
-  - t2.micro
-  - t3.micro
-  - t4.micro
+  - '"t2.micro"'
+  - '"t3.micro"'
+  - '"t4.micro"'
 publicip:
   - true
   - false
-secgroupname: IAC-Sec-Group
-key_name: "~/.ssh/id_rsa.pub"
-ssh_path: "pub.key"
+secgroupname: '"IAC-Sec-Group"'
+ssh_path: '"~/.ssh/"'
+key_name: '"id_rsa.pub"'
+packages:
+  - '["wget", "whoami", "chmod", "mv", "update-ca-certificates"]'
+package_upgrade:
+  - true
+  - false
+package_update:
+  - true
+  - false
+users: '[{ name = "sthings", gecos = "sthings user", groups = "admin, ubuntu", lock_passwd = "true", sudo = "ALL=(ALL) NOPASSWD:ALL", ssh_authorized_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsHiyet7tO+qXYKEy6XBiHNICRfGsBZYIo/JBQ2i16WgkC7rq6bkGwBYtni2j0X2pp0JVtcMO+hthqj37LcGH02hKa24eAoj2UdnFU+bhYxA6Mau1B/5MCkvs8VvBjxtM3FVJE7mY5bZ19YrKJ9ZIosAQaVHiGUu1kk49rzQqMrwT/1PNbUYW19P8J2LsfnaYJIl4Ljbxr0k52MGdbKwgxdph3UKciQz2DhutrmO0gf3Ncn4zpdClldaBtDB0EMMqD3BAtEVsucttzqdeYQwixMTtyuGpAKAJNUqhpleeVhShPZLke0vXxlA6/fyfkSM78gN2FQcRGVPN6hOMkns/b" }]'

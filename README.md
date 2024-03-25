@@ -6,21 +6,29 @@ terraform module for creating ec2 vm instances
 
 ```hcl
 module "ec2-vm" {
-  source        = "github.com/stuttgart-things/aws-ec2-vm"
-  region        = "eu-central-1"
-  vpc           = "vpc-ec6e8e86"
-  ami           = "ami-023adaba598e661ac"
-  itype         = "t2.micro"
-  subnet        = "subnet-19213454"
-  publicip      = true
-  key_name      = "~/.ssh/id_rsa.pub"                 ### path of public key ###
-  secgroupname  = "IAC-Sec-Group"
-  ssh_path      = "pub.key"                           ### the public key ###
-  user_data     = "../scripts/add-ssh-web-app.yaml    ### path of cloud-init script ###
+  source          = "github.com/stuttgart-things/aws-ec2-vm" # /home/sthings/projects/tf/aws-ec2-vm
+  region          = "eu-west-1"
+  vpc             = "vpc-08520570421e6f9f4"
+  ami             = "ami-0cccdaf0d83701c22"
+  itype           = "t3.micro"
+  publicip        = true
+  secgroupname    = "terraform-20240325102244051600000002"
+  ssh_path        = "~/.ssh/id_rsa.pub"
+  key_name        = "id_rsa.pub"
+  packages        = ["wget", "whoami", "chmod", "mv", "update-ca-certificates"]
+  package_upgrade = true
+  subnet          = "subnet-09dd9c1f37ae08fb3"
+  package_update  = true
+  init_username   = "sthings"
+  init_pubkey     = "ssh-rsa AAAAB3Nz #..."
 }
 
 output "ec2-vm" {
-  value       = [module.ec2-vm.ec2instance]           ### referencing output value from child module ###
+  value = [module.ec2-vm.ec2instance] ### referencing output value from child module ###
+}
+
+output "cloudinit" {
+  value = [module.ec2-vm.cloudinit] ### referencing output value from child module ###
 }
 ```
 
@@ -60,4 +68,3 @@ You may obtain a copy of the License at [apache.org/licenses/LICENSE-2.0](http:/
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an _"AS IS"_ basis, without WARRANTIES or conditions of any kind, either express or implied.
 
 See the License for the specific language governing permissions and limitations under the License.
-
