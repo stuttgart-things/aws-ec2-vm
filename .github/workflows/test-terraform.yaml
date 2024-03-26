@@ -1,0 +1,16 @@
+---
+name: Test Terraform
+on:
+  workflow_dispatch:
+
+jobs:
+  Test-Aws-Connection:
+    runs-on: ghr-aws-ec2-vm-sthings-cicd
+    container:
+      image: eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
+    environment: k8s
+    continue-on-error: false
+    steps:
+      - run: |
+          terraform --version
+          aws --version
