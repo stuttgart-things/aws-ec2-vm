@@ -11,28 +11,35 @@ on:
         type: string
         required: false
         default: ghr-aws-ec2-vm-sthings-cicd
-      #environment-name:
-      #  type: string
-      #  required: true
-      #  default: k8s
+      environment-name:
+        type: string
+        required: true
+        default: k8s
+      aws-region:
+        type: string
+        required: true
+        default: eu-west-1
 
 jobs:
   Test-Aws-Connection:
     runs-on: ${{ inputs.runs-on }} #ghr-aws-ec2-vm-sthings-cicd
     container:
       image: ${{ inputs.image-version }} #eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
-    environment: k8s
+    environment: ${{ inputs.environment-name }}
     env:
       AWS_CONFIG_DIR: ~/.aws
     continue-on-error: false
     steps:
-      - run: |
+      - name: Check versions
+        id: check
+        run: |
           terraform --version
           aws --version
-      - name: create credentials file
+      - name: Set and test aws creds
+        id: creds
         run: |
-          aws configure set region us-east-1
-          aws configure list
+          echo ${AWS_CONFIG_DIR}
+          aws configure set region ${{ inputs.aws-region }}
           echo ${{ secrets.AWS_CONFIG }} | base64 -d > ~/.aws/credentials
-          ls -lta 
+          aws configure list
           aws sts get-caller-identity
