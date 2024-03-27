@@ -27,5 +27,4 @@ jobs:
       - run: |
           terraform --version
           aws --version
-          ls -l ${HOME}/.aws/
-          cat ${HOME}/.aws/credentials
+          echo $HOME
