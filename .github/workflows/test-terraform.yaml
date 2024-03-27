@@ -28,3 +28,4 @@ jobs:
           terraform --version
           aws --version
           echo $HOME
+          ls -la $HOME/
