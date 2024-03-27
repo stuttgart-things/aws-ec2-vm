@@ -21,7 +21,7 @@ on:
         default: eu-west-1
 
 jobs:
-  test-terraform-creation:
+  Test-Terraform-Creation:
     runs-on: ${{ inputs.runs-on }} #ghr-aws-ec2-vm-sthings-cicd
     container:
       image: ${{ inputs.image-version }} #eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
@@ -44,11 +44,11 @@ jobs:
         id: git
         uses: actions/checkout@v4.1.1
         with:
-          path: ''
+          path: module
           fetch-depth: '0'
       - name: Test code
         id: test
         run: |
           ls -lta
-          echo $GITHUB_ACTION_PATH
-
+          ls -lta module
+          echo $GITHUB_WORKSPACE
