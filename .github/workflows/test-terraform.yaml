@@ -28,4 +28,8 @@ jobs:
           terraform --version
           aws --version
           echo $HOME
-          ls -la $HOME/
+          mkdir -p $HOME/.aws
+          cat << EOF > ~/.aws/credentials
+          [default]
+          EOF
+          
