@@ -1,5 +1,5 @@
 ---
-name: Test Terraform
+name: Test Terraform Creation
 on:
   workflow_dispatch:
     inputs:
@@ -21,7 +21,7 @@ on:
         default: eu-west-1
 
 jobs:
-  Test-Aws-Connection:
+  test-terraform-creation:
     runs-on: ${{ inputs.runs-on }} #ghr-aws-ec2-vm-sthings-cicd
     container:
       image: ${{ inputs.image-version }} #eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
@@ -35,11 +35,10 @@ jobs:
         run: |
           terraform --version
           aws --version
-      - name: Set and test aws creds
+      - name: Set and test aws credentials
         id: creds
         run: |
-          echo ${AWS_CONFIG_DIR}
           aws configure set region ${{ inputs.aws-region }}
-          echo ${{ secrets.AWS_CONFIG }} | base64 -d > ~/.aws/credentials
+          echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_DIR}/credentials
           aws configure list
           aws sts get-caller-identity
