@@ -26,8 +26,6 @@ jobs:
     container:
       image: ${{ inputs.image-version }} #eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
     environment: ${{ inputs.environment-name }}
-    env:
-      AWS_CONFIG_DIR: ~/.aws
     continue-on-error: false
     steps:
       - name: Check versions
@@ -39,6 +37,6 @@ jobs:
         id: creds
         run: |
           aws configure set region ${{ inputs.aws-region }}
-          echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_DIR}/credentials
+          echo ${{ secrets.AWS_CONFIG }} | base64 -d > ~/.aws/credentials
           aws configure list
           aws sts get-caller-identity
