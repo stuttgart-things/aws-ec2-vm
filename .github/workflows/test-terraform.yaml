@@ -3,21 +3,15 @@ name: Test Terraform
 on:
   workflow_dispatch:
     inputs:
-      runs-on:
-        type: string
-        default: self-hosted
-        required: false
-      terraform-image:
+      image-version:
         type: string
         default: eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
-        required: false
 
-      
 jobs:
   Test-Aws-Connection:
-    runs-on: ${{ inputs.runs-on }}
+    runs-on: ghr-aws-ec2-vm-sthings-cicd
     container:
-      image: ${{ inputs.terraform-image }}
+      image: ${{ inputs.image-version }} #eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
     environment: k8s
     continue-on-error: false
     steps:
