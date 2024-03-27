@@ -50,5 +50,5 @@ jobs:
         id: test
         run: |
           ls -lta
-          echo ${{ github.action_path }}
+          echo $GITHUB_ACTION_PATH
 
