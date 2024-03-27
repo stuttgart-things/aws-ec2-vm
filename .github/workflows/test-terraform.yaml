@@ -40,3 +40,5 @@ jobs:
           echo ${{ secrets.AWS_CONFIG }} | base64 -d > ~/.aws/credentials
           aws configure list
           aws sts get-caller-identity
+          echo ${GITHUB_ACTION_PATH}
+          pwd
