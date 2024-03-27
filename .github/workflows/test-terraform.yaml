@@ -27,3 +27,4 @@ jobs:
       - run: |
           terraform --version
           aws --version
+          aws sts get-caller-identity
