@@ -33,6 +33,8 @@ jobs:
         run: |
           mkdir -p ${AWS_CONFIG_DIR}
           echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_DIR}/credentials
+          echo ${{ secrets.AWS_REGION }} | base64 -d > ${AWS_CONFIG_DIR}/config
+          
       - name: view the content credentials file
         run: cat ${AWS_CONFIG_DIR}/credentials
       - name: Get account details
