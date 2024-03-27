@@ -22,14 +22,18 @@ jobs:
     container:
       image: ${{ inputs.image-version }} #eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
     environment: k8s
+    env:
+      AWS_CONFIG_FILE: $HOME/.aws/credentials
     continue-on-error: false
     steps:
       - run: |
           terraform --version
           aws --version
-          echo $HOME
-          mkdir -p $HOME/.aws
-          cat << EOF > ~/.aws/credentials
-          [default]
-          EOF
+      - name: create credentials file
+        run: |
+          mkdir -p ${AWS_CONFIG_FILE}
+          echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_FILE}
+      - name: view the content credentials file
+        run: cat ~/.aws/credentials
+        
           
