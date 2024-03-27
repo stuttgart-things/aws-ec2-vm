@@ -40,5 +40,15 @@ jobs:
           echo ${{ secrets.AWS_CONFIG }} | base64 -d > ~/.aws/credentials
           aws configure list
           aws sts get-caller-identity
-          echo ${GITHUB_ACTION_PATH}
-          pwd
+      - name: Checkout code
+        id: git
+        uses: actions/checkout@v4.1.1
+        with:
+          path: ''
+          fetch-depth: '0'
+      - name: Test code
+        id: test
+        run: |
+          ls -lta
+          echo ${{ github.action_path }}
+
