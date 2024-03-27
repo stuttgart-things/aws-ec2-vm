@@ -31,9 +31,8 @@ jobs:
           aws --version
       - name: create credentials file
         run: |
-          mkdir -p ${AWS_CONFIG_DIR}
           aws configure set region us-east-1
-          echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_DIR}/credentials
           aws configure list
-          ls -lta ~/.aws/
+          echo ${{ secrets.AWS_CONFIG }} | base64 -d > ~/.aws/credentials
+          ls -lta 
           aws sts get-caller-identity
