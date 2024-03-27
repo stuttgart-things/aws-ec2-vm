@@ -35,5 +35,7 @@ jobs:
           echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_DIR}/credentials
       - name: view the content credentials file
         run: cat ${AWS_CONFIG_DIR}/credentials
+      - name: Get account details
+        run: aws sts get-caller-identity
         
           
