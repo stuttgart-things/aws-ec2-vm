@@ -34,6 +34,6 @@ jobs:
           mkdir -p ${AWS_CONFIG_DIR}
           echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_DIR}/credentials
       - name: view the content credentials file
-        run: cat ~/.aws/credentials
+        run: cat ${AWS_CONFIG_DIR}/credentials
         
           
