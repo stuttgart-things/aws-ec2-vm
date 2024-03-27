@@ -12,6 +12,19 @@ moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in valu
   {{ key }} = {{ values[key] }}{% endfor %}
 }"""
 
+stateS3Template = """terraform {
+  backend "s3" {
+    bucket = "pat-tf1"
+    key    = "terraform.tfstate"
+    region = "eu-west-1"
+  }
+}"""
+
+outputsTemplate = """output "cloudinit" {
+  value = [module.ec2-vm.cloudinit]
+}"""
+
+
 # PARSE ARGS
 parser = argparse.ArgumentParser()
 parser.add_argument('-v', '--values', default='values.yaml')
@@ -59,7 +72,7 @@ def main():
 
   # ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
   if args.source == "local":
-    values["source"] = '"'+local_module_path+'"'
+    values['call']['source'] = '"'+local_module_path+'"'
 
   for key in values:
 
@@ -67,7 +80,7 @@ def main():
     if isinstance(values[key], list):
       values[key] = get_random_fromlist(values[key])
 
-  renderedTemplate = render_template(values)
+  renderedTemplate = render_template(values.get('call'))
   renderedTemplate = renderedTemplate.replace("True", "true")
   renderedTemplate = renderedTemplate.replace("False", "false")
 

@@ -55,7 +55,7 @@ Or install [aws-cli](https://github.com/aws/aws-cli) and run the configure comma
 
 ```bash
 # EXAMPLE CALL
-python3 tests/create-module-test.py --values tests/values.yaml
+python3 tests/create-module-test.py --values tests/values.yaml --path /tmp/terraform/
 ```
 
 ## CONNECT TO MACHINE(S)
