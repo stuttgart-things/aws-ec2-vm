@@ -32,16 +32,7 @@ jobs:
       - name: create credentials file
         run: |
           mkdir -p ${AWS_CONFIG_DIR}
-          aws configure list
+          aws configure set region us-east-1
           echo ${{ secrets.AWS_CONFIG }} | base64 -d > ${AWS_CONFIG_DIR}/credentials
-          echo ${{ secrets.AWS_REGION }} | base64 -d > ${AWS_CONFIG_DIR}/config
           aws configure list
-          
-      - name: view the content credentials file
-        run: |
-          cat ${AWS_CONFIG_DIR}/credentials
-          aws configure list
-      - name: Get account details
-        run: aws sts get-caller-identity
-        
-          
+          aws sts get-caller-identity
