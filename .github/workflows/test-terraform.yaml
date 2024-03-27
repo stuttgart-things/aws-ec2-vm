@@ -27,4 +27,5 @@ jobs:
       - run: |
           terraform --version
           aws --version
-          aws sts get-caller-identity
+          ls -l ${HOME}/.aws/
+          cat ${HOME}/.aws/credentials
