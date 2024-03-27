@@ -23,7 +23,7 @@ jobs:
       image: ${{ inputs.image-version }} #eu.gcr.io/stuttgart-things/sthings-terraform:1.7.5
     environment: k8s
     env:
-      AWS_CONFIG_DIR: $HOME/.aws
+      AWS_CONFIG_DIR: ~/.aws
     continue-on-error: false
     steps:
       - run: |
