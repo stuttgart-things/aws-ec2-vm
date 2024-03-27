@@ -14,6 +14,7 @@ on:
       environment-name:
         type: string
         required: true
+        default: k8s
 
 jobs:
   Test-Aws-Connection:
