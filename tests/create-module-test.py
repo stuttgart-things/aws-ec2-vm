@@ -13,23 +13,26 @@ moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in valu
 }"""
 
 stateS3Template = """terraform {
-  backend "s3" {
-    bucket = "pat-tf1"
-    key    = "terraform.tfstate"
-    region = "eu-west-1"
+  backend "{{ values.name }}" {
+    bucket = "{{ values.bucket }}"
+    key    = "{{ values.key }}"
+    region = "{{ values.region }}"
   }
 }"""
 
-outputsTemplate = """output "cloudinit" {
-  value = [module.ec2-vm.cloudinit]
-}"""
-
+outputsTemplate = """{%- for output in values.all %}{% set outputs = output.split('+') %}
+output "{{ outputs[0] }}" {
+  value = [module.{{ outputs[1] }}]
+}{% endfor %}
+"""
 
 # PARSE ARGS
 parser = argparse.ArgumentParser()
 parser.add_argument('-v', '--values', default='values.yaml')
 parser.add_argument('-s', '--source', default='local')
 parser.add_argument('-p', '--path', default='/tmp/tf/')
+parser.add_argument('-st', '--state', default='local')
+
 args = parser.parse_args()
 
 local_module_path = os.path.dirname(sys.path[0])
@@ -58,11 +61,16 @@ def get_random_fromlist(list):
   return str(random_num)
 
 # RENDER TEMPLATE
-def render_template(values):
-  template = Template(moduleCallTemplate)
-  renderedTemplate = template.render(values=values)
+def render_template(template, values):
+  template = Template(template)
+  renderedModuleCall = template.render(values=values)
 
-  return str(renderedTemplate)
+  return str(renderedModuleCall)
+
+# WRITE TO DISK
+def write_todisk(content, destination):
+  with open(destination, 'w') as f:
+    f.write(content)
 
 def main():
 
@@ -80,15 +88,22 @@ def main():
     if isinstance(values[key], list):
       values[key] = get_random_fromlist(values[key])
 
-  renderedTemplate = render_template(values.get('call'))
-  renderedTemplate = renderedTemplate.replace("True", "true")
-  renderedTemplate = renderedTemplate.replace("False", "false")
+  renderedModuleCall = render_template(moduleCallTemplate, values.get('call'))
+  renderedModuleCall = renderedModuleCall.replace("True", "true")
+  renderedModuleCall = renderedModuleCall.replace("False", "false")
+  write_todisk(renderedModuleCall, local_workspace_path+'/main.tf')
 
-  print(renderedTemplate)
+  print(renderedModuleCall)
 
-# RENDER OUTPUT
-  with open(local_workspace_path+'/main.tf', 'w') as f:
-    f.write(renderedTemplate)
+  if args.state == "s3":
+     renderedStateConfig = render_template(stateS3Template, values.get('state'))
+     print(renderedStateConfig)
+     write_todisk(renderedStateConfig, local_workspace_path+'/state.tf')
+
+  if "outputs" in values:
+     renderedOutputs = render_template(outputsTemplate, values.get('outputs'))
+     print(renderedOutputs)
+     write_todisk(renderedOutputs, local_workspace_path+'/output.tf')
 
 if __name__ == '__main__':
     main()
