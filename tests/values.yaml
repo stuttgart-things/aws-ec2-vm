@@ -1,8 +1,8 @@
 ---
 state:
   name: s3
-  bucket: pat-tf1
-  key: terraform.tfstate
+  bucket: ankit-devops1
+  key: github.tfstate
   region: eu-west-1
 
 call:
