@@ -101,3 +101,11 @@ jobs:
         id: config
         run: |
           ls -lta ${{ inputs.module-name }}
+      - name: Execute terraform
+        id: apply
+        run: |
+          terraform -chdir="${{ inputs.module-name }}" init --upgrade
+          terraform -chdir="${{ inputs.module-name }}" plan -out tf.plan
+          # terraform -chdir="${{ inputs.module-name }}" init --upgrade ${{ inputs.module-name }}
+          # sleep 10m
+          # terraform -chdir="/tmp/tf/" init --upgrade ${{ inputs.module-name }}
