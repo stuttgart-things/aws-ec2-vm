@@ -60,27 +60,31 @@ jobs:
     continue-on-error: false
     steps:
       - name: Checkout code
+        id: git-ckeckout
         uses: actions/checkout@v4.1.1
         with:
           fetch-depth: '0'
 
       - name: Install python dependecies
+        id: python-dependecies
         run: |
           pip3 install -r tests/requirements.txt
 
       - name: Create terraform configuration
+        id: tf-config
         run: |
           python3 tests/create-module-test.py \
           --values tests/values.yaml \
-          --path test/ \
+          --path ${{ inputs.module-name }}/ \
           --source local \
           --st s3
 
       - name: Upload terraform configuration
+        id: tf-upload
         uses: actions/upload-artifact@v4.1.0
         with:
           name: tf-config
-          path: test
+          path: ${{ inputs.module-name }}
 
   Execute-Terraform-Code:
     runs-on: ${{ inputs.runs-on }}
@@ -91,6 +95,7 @@ jobs:
     continue-on-error: false
     steps:
       - name: Checkout code
+        id: git-ckeckout
         uses: actions/checkout@v4.1.1
         with:
           fetch-depth: '0'
@@ -125,3 +130,11 @@ jobs:
           sleep 5m
           terraform -chdir="${{ inputs.module-name }}" plan -destroy -out destroy.plan
           terraform -chdir="${{ inputs.module-name }}" apply destroy.plan
+
+      - name: Upload terraform plan
+        id: upload
+        uses: actions/upload-artifact@v4.1.0
+        with:
+          name: tf-plan
+          path: |
+            apply.plan
