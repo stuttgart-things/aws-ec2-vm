@@ -79,3 +79,21 @@ jobs:
         with:
           name: tf-config
           path: test
+
+  Execute-Terraform-Code:
+    runs-on: ${{ inputs.runs-on }}
+    container:
+      image: ${{ inputs.image-version }}
+    environment: ${{ inputs.environment-name }}
+    needs: Create-Terraform-Configuration
+    continue-on-error: false
+    steps:
+      - name: Download terraform config
+        id: download
+        uses: actions/download-artifact@v4.1.4
+        with:
+          name: tf-config
+      - name: Check config files
+        id: config
+        run: |
+          ls -lta
