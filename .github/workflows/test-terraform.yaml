@@ -90,6 +90,11 @@ jobs:
     needs: Create-Terraform-Configuration
     continue-on-error: false
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: '0'
+
       - name: Set and test aws credentials
         if: ${{ inputs.cloud == 'aws' }}
         id: aws-creds
