@@ -137,4 +137,4 @@ jobs:
         with:
           name: tf-plan
           path: |
-            apply.plan
+            ${{ inputs.module-name }}/apply.plan
