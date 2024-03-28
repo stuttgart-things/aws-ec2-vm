@@ -71,11 +71,11 @@ jobs:
         run: |
           python3 tests/create-module-test.py \
           --values tests/values.yaml \
-          --path ./test/ \
+          --path test/ \
           --source local \
           --st s3
       - name: Upload terraform configuration
         uses: actions/upload-artifact@v4.1.0
         with:
           name: tf-config
-          path: /test/
+          path: test
