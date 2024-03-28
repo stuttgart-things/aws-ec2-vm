@@ -63,15 +63,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
         with:
-          path: source
           fetch-depth: '0'
       - name: Install python dependecies
         run: |
           pip3 install -r source/tests/requirements.txt
       - name: Create terraform configuration
         run: |
-          python3 source/tests/create-module-test.py \
-          --values source/tests/values.yaml \
+          python3 tests/create-module-test.py \
+          --values tests/values.yaml \
           --path ./test/ \
           --source local \
           --st s3
