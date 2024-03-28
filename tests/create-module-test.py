@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import yaml
 import random
 from jinja2 import Template
@@ -12,6 +13,7 @@ moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in valu
   {{ key }} = {{ values[key] }}{% endfor %}
 }"""
 
+# S3 STATE CONFIGURATION TEMPLATE
 stateS3Template = """terraform {
   backend "{{ values.name }}" {
     bucket = "{{ values.bucket }}"
@@ -20,12 +22,14 @@ stateS3Template = """terraform {
   }
 }"""
 
+# OUTPUTS TEMPLATE
 outputsTemplate = """{%- for output in values.all %}{% set outputs = output.split('+') %}
 output "{{ outputs[0] }}" {
   value = [{{ outputs[1] }}]
 }{% endfor %}
 """
 
+# NOTES TEMPLATE
 notesTemplate = """
 HOW TO EXECUTE TERRAFORM:
 terraform -chdir="{{ values.workspace_path }}" init --upgrade \
