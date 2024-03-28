@@ -97,3 +97,6 @@ jobs:
         id: config
         run: |
           ls -lta
+          echo "value=`basename ${{ github.repository }}`"
+          cd ${{ github.repository }}
+          ls -lta
