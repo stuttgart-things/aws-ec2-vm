@@ -10,7 +10,7 @@ import shutil
 
 # WORKSPACE MODULE CALL TEMPLATE
 moduleCallTemplate = """module "ec2-vm" {% raw %}{{% endraw %}{% for key in values %}
-  {{ key }} = {{ values[key] }}{% endfor %}
+  {{ key }} = {% if ("True" == values[key]) or ("False" == values[key]) or ("[" == values[key][0]) %}{{ values[key] }}{% else %}"{{ values[key] }}"{% endif %}{% endfor %}
 }"""
 
 # S3 STATE CONFIGURATION TEMPLATE
@@ -100,7 +100,7 @@ def main():
 
   # ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
   if args.source == "local":
-    values['call']['source'] = '"'+local_module_path+'"'
+    values['call']['source'] = local_module_path
 
   # GET RANDOM VALUES
   randomValues = pick_random(values.get('call'))
