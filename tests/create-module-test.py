@@ -71,8 +71,19 @@ def get_random_fromlist(list):
 
   return str(random_num)
 
-# ADD UPDATE_DICT & MERGE FUNCTIONS HERE                     ANKIT TO DO
+# UPDATE_DICT & MERGE FUNCTIONS HERE                     ANKIT TO DO
+def update_dict_with_overwrites(input_dict, overwrite_string):
+    pairs = overwrite_string.split(';')
+    for pair in pairs:
+        key, value = pair.split('=')
+        input_dict[key.strip()] = value.strip()
+    return input_dict
 
+# MERGE FUNCTION
+def merge(input_dict, my_dict):
+    res = input_dict | my_dict
+    return res
+  
 # RENDER TEMPLATE
 def render_template(template, values):
   template = Template(template)
