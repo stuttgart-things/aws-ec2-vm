@@ -43,7 +43,9 @@ parser.add_argument('-v', '--values', default='values.yaml')
 parser.add_argument('-s', '--source', default='local')
 parser.add_argument('-p', '--path', default='/tmp/tf/')
 parser.add_argument('-st', '--state', default='local')
+# PLEASE ADD AN ARGUMENT FOR OVERWRITES                  ANKIT TO DO              
 args = parser.parse_args()
+
 
 # SET WORSPACE VARS
 local_module_path = os.path.dirname(sys.path[0])
@@ -68,6 +70,8 @@ def get_random_fromlist(list):
   print("RANDOM SELECT IS: " + str(random_num))
 
   return str(random_num)
+
+# ADD UPDATE_DICT & MERGE FUNCTIONS HERE                     ANKIT TO DO
 
 # RENDER TEMPLATE
 def render_template(template, values):
@@ -97,7 +101,9 @@ def main():
   # LOAD YAML FILE
   with open(args.values, 'r') as f:
       values = yaml.load(f, Loader=yaml.SafeLoader)
-
+    
+## CHECK IF ARGS OVERWRITES ARE SET, IF SOME OVERWRITES ARE SET -> CALL UPDATED_DICTS FUNCTION
+  
   # ITERATE OVER THE VALUES DICTIONARY + GET RANDOM VALUE
   if args.source == "local":
     values['call']['source'] = local_module_path
@@ -106,6 +112,9 @@ def main():
   randomValues = pick_random(values.get('call'))
 
   # RENDER MODULE CALL
+  
+  # PLEASE MERGE WITH OVERWRTIES DICTS   -> CALL TO MERGE DICT FUNCTION BEFORE RENDER                  ANKIT TO DO
+  
   renderedModuleCall = render_template(moduleCallTemplate, randomValues)
   renderedModuleCall = renderedModuleCall.replace("True", "true")
   renderedModuleCall = renderedModuleCall.replace("False", "false")
@@ -117,6 +126,7 @@ def main():
   write_todisk(renderedModuleCall, local_workspace_path+'/main.tf')
 
   if args.state == "s3":
+    # PLEASE MERGE WITH OVERWRTIES DICTS                                    ANKIT TO DO
      renderedStateConfig = render_template(stateS3Template, values.get('state'))
 
      # PRINT STATE CONFIG
